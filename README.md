@@ -5,5 +5,7 @@
 #### Referencies
 
 [Discordpy docs](https://discordpy.readthedocs.io/en/stable/quickstart.html)
+
 [Discordpy examples](https://github.com/Rapptz/discord.py/tree/v1.7.3/examples)
+
 [Reports bot](https://github.com/rodcordeiro/glpiReports/)

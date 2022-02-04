@@ -6,8 +6,4 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Kuuhaku")
 
 logger.info("Start application")
-client = Bot(config('TOKEN'))
-
-        
-
-
+client = Bot()

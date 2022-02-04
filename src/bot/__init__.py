@@ -13,14 +13,10 @@ class Client(discord.Client):
             return
         if message.content.startswith('!hello'):
             await message.channel.send('Hello!')
-        print('Message from {0.author}: {0}'.format(message))
+        print('Message from {0.author}: {0.content}'.format(message))
 
 class Bot:
-    def __init__(self, token):
+    def __init__(self):
         self.client = Client()
         self.client.run(config('TOKEN'))
-        return self.client
 
-
-# client = Client()
-# client.run(config('TOKEN'))
