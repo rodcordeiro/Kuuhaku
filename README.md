@@ -9,3 +9,11 @@
 [Discordpy examples](https://github.com/Rapptz/discord.py/tree/v1.7.3/examples)
 
 [Reports bot](https://github.com/rodcordeiro/glpiReports/)
+
+[Pytrello](https://pypi.org/project/py-trello/)
+
+[Using pytrello](https://pt.linkedin.com/pulse/puxando-os-dados-do-trello-com-python-igor-fontolan-lucci)
+
+[Using interfaces in python](https://realpython.com/python-interface/)
+
+<!-- https://www.youtube.com/watch?v=-w7XYr22UEw -->

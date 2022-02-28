@@ -1,5 +1,5 @@
 import logging
-from Bot import Bot
+from bot import Bot
 from Trello import Trello
 
 logging.basicConfig(level=logging.INFO)
