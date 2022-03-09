@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `KH_TB_GUILDS` (
+	`id` INTEGER PRIMARY KEY  AUTOINCREMENT,
+	`guild_id` TEXT UNIQUE NOT NULL,
+  	`name` TEXT NOT NULL,
+    `prefix` TEXT DEFAULT "!" NOT NULL,
+	`invited_at` datetime DEFAULT CURRENT_TIMESTAMP,
+	`trello_token` TEXT DEFAULT NULL,
+	`azure_token` TEXT DEFAULT NULL
+);
+
+-- INSERT INTO KH_TB_GUILDS (guild_id,name,prefix) VALUES ('697180940127961128','Darth Code','!'), ('911248622421704704','<Undefined />','.');
