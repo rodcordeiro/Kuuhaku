@@ -17,3 +17,6 @@
 [Using interfaces in python](https://realpython.com/python-interface/)
 
 <!-- https://www.youtube.com/watch?v=-w7XYr22UEw -->
+
+<!-- https://github.com/microsoft/azure-devops-python-api -->
+<!-- https://docs.microsoft.com/pt-br/rest/api/azure/devops/?view=azure-devops-rest-7.1#create-the-request -->
