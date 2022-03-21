@@ -10,6 +10,7 @@ class Clients:
             clients[guild] = client
             self.clients[type] = clients
         except Exception:
+            clients = {}
             clients[guild] = client
             self.clients[type] = clients
 

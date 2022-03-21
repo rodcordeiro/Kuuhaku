@@ -4,9 +4,19 @@ from models.guild import Guild
 from models.user import User
 from db import Database
 import random
+import re
+from . import FILTERED_WORDS
 
 db = Database()
 
+
+async def filtered_words(message):
+    for bad_word in FILTERED_WORDS:
+        regex = re.compile(bad_word, re.IGNORECASE)
+        for word in message.content.split(" "):
+            match = regex.match(word)
+            if match is not None:
+                await message.delete()
 
 def extract_message(message):
     return Message(
@@ -46,11 +56,11 @@ def extract_user(message):
     return User(message.guild.id, message.author)
 
 
-def attribute_msg_xp(user, guildId):
+async def attribute_msg_xp(user, guildId):
     data = db.has_user(guildId, user)
     if data:
         xp = data["XP"] + random.randint(5, 15)
-        db.increase_xp(guildId, user.id, xp)
+        await db.increase_xp(guildId, user.id, xp)
 
 
 # <Message id=950959298576539658

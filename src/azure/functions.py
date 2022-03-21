@@ -1,0 +1,11 @@
+# {'additional_properties': {}, 
+# 'abbreviation': None, 
+# 'default_team_image_url': None, 
+# 'description': None, 
+# 'id': '03105f34-ffa4-48ca-b433-f6a2abd72cd7', 
+# 'last_update_time': datetime.datetime(2022, 2, 14, 17, 33, 56, 980000, tzinfo=<isodate.tzinfo.Utc object at 0x0000015A9BBE5270>), 
+# 'name': 'Projetos', 
+# 'revision': 1242, 
+# 'state': 'wellFormed', 
+# 'url': 'https://pdasolucoes.visualstudio.com/_apis/projects/03105f34-ffa4-48ca-b433-f6a2abd72cd7', 
+# 'visibility': 'private'}

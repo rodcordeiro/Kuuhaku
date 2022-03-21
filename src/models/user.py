@@ -7,7 +7,7 @@ class User:
         self.id = user.id
         self.name = user.name
         self.avatar = user.avatar_url
-        self.nick = user.nick
+        # self.nick = user.nick
         self.isBot = user.bot
         self.discriminator = user.discriminator
         if user.bot == False:

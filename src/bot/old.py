@@ -8,18 +8,6 @@ from Trello import Trello
 from db import Database
 
 
-logger = logging.getLogger(__name__)
-
-description="""# < Kuuhaku /> bot
-"""
-
-intents = discord.Intents.default()
-intents.members = True
-intents.reactions = True
-
-bot = commands.Bot(command_prefix=config('PREFIX'), description=description, intents=intents)
-trello = Trello()
-db = Database()
 
 # @commands.guild_only()
 # @bot.command(name="boards",help="Returns trello boards")

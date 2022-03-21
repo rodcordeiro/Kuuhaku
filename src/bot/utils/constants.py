@@ -1,4 +1,4 @@
-FILTERED_WORDS = ["buceta", "nigga"]
+FILTERED_WORDS = ["buceta", "nigga", "caralho","cacete", "porra"]
 EMOJIS = [
     "1️⃣",
     "2️⃣",
