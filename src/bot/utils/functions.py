@@ -1,22 +1,92 @@
+import json
+from discord import Message, Colour
+from azure.devops.v5_1.work_item_tracking.models import WorkItemReference
+
 from models.channel import Channel
-from models.message import Message
+from models.message import Message as MessageModel
 from models.guild import Guild
 from models.user import User
 from db import Database
+from Azure import Azure
 import random
 import re
-from . import FILTERED_WORDS
+from . import FILTERED_WORDS, Clients, Embed
 
 db = Database()
+clients = Clients()
 
+def get_color(type:str):
+    if type == 'Bug':
+        return Colour.red()
+    if type == 'Feature':
+        return Colour.purple()
+    if type == 'task':
+        return Colour.gold()
+    if type == 'Product Backlog Item':
+        return Colour.red()
+    if type == 'Bug':
+        return Colour.red()
+    if type == 'Bug':
+        return Colour.red()
+    if type == 'Bug':
+        return Colour.red()
+    return Colour.blurple()
+ 
 
-async def filtered_words(message):
+async def filtered_words(message: Message):
     for bad_word in FILTERED_WORDS:
         regex = re.compile(bad_word, re.IGNORECASE)
         for word in message.content.split(" "):
             match = regex.match(word)
             if match is not None:
                 await message.delete()
+
+
+async def has_azure_task(message: Message):
+    for word in message.content.split(" "):
+        regex = re.compile("^#\d{3,}", re.IGNORECASE)
+        match = regex.match(word)
+        # print(word,match)
+        if match is not None:
+            try:
+                guild = extract_guild(message)
+                client: Azure = clients.get_client("azure", guild.guild_id)
+                task = client.get_task(match)
+                await message.channel.send("oi")
+            except Exception as err:
+                if err.args[0] == "No clients available":
+                    azure = db.get_azure_config(guild.guild_id)
+                    client = Azure(
+                        azure["TOKEN"],
+                        azure["ORGANIZATION"],
+                        azure["DEFAULT_PROJECT"]
+                        if azure["DEFAULT_PROJECT"] is not None
+                        else None,
+                    )
+                    clients.add_client("azure", guild.guild_id, client)
+                    task: WorkItemReference = client.get_task(
+                        str(word).replace("#", "")
+                    )
+                    data = task.serialize()["fields"]
+                    print(data)
+                    embed = Embed(
+                        title=data["System.Title"], 
+                        description=data["System.Description"] if data["System.Description"] else "",
+                        url=task.url,
+                        color=get_color(data['System.WorkItemType'])
+                    )
+                    # embed.
+                    embed.set_footer(
+                        text=task.url,  # f"[{data['System.WorkItemType']}]({task.url})",
+                        icon_url="https://cdn.iconscout.com/icon/free/png-256/bug-fixing-seo-web-repair-virus-insect-spider-10-8829.png",
+                    )
+                    embed.set_thumbnail(
+                        url="https://cdn.iconscout.com/icon/free/png-256/bug-fixing-seo-web-repair-virus-insect-spider-10-8829.png"
+                    )
+                    return await message.channel.send(embed=embed)
+                print("err", err.args[0])
+                pass
+
 
 def extract_message(message):
     return Message(

@@ -5,7 +5,6 @@ from discord.channel import TextChannel
 from discord.ext import commands as DiscCommand
 from datetime import datetime
 
-
 from .bot import bot
 from .reaction import ProcessCommands
 from .utils import Embed, GENERAL_CHANNEL_NAMES, Clients
@@ -16,6 +15,7 @@ from .utils.functions import (
     extract_user,
     attribute_msg_xp,
     filtered_words,
+    has_azure_task,
 )
 from db import Database
 
@@ -177,6 +177,7 @@ async def on_message(message: Message):
     if isinstance(message.channel, TextChannel):
         guild = extract_guild(message)
         user: User = extract_user(message)
+        await has_azure_task(message)
         if user.isBot == False:
             await attribute_msg_xp(user, guild.guild_id)
             process = await db.has_process(guild=guild.guild_id, user=user.id)

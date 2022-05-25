@@ -1,5 +1,6 @@
 from decouple import config
 from sqlite3 import connect, Cursor, Connection
+from datetime import datetime
 import uuid
 import logging
 
@@ -126,15 +127,17 @@ class Database:
         self.con.commit()
         cursor.close()
         return
+
     def update_azure_token(self, guild_id, token, user_id):
         cursor = self.con.cursor()
         cursor.execute(
-            f"UPDATE KH_TB_AZURE SET TOKEN = '{token}', LINKED_BY='{user_id}' WHERE GUILD_ID = '{guild_id}';"
+            f"UPDATE KH_TB_AZURE SET TOKEN = '{token}', LINKED_BY='{user_id}', LINKED_AT = '{datetime.now()}' WHERE GUILD_ID = '{guild_id}';"
         )
         self.con.commit()
         cursor.close()
         return
-    def set_azure_organization(self, guild_id,organization):
+
+    def set_azure_organization(self, guild_id, organization):
         cursor = self.con.cursor()
         cursor.execute(
             f"UPDATE `KH_TB_AZURE` SET `ORGANIZATION` = '{organization}' WHERE `GUILD_ID` = '{guild_id}';"
@@ -142,7 +145,8 @@ class Database:
         self.con.commit()
         cursor.close()
         return
-    def set_azure_project(self, guild_id,project):
+
+    def set_azure_project(self, guild_id, project):
         cursor = self.con.cursor()
         cursor.execute(
             f"UPDATE `KH_TB_AZURE` SET `DEFAULT_PROJECT` = '{project}' WHERE `GUILD_ID` = '{guild_id}';"
@@ -232,14 +236,14 @@ class Database:
         if id:
             return result
         cursor.close()
-    def delete_process(self,process_id):
+
+    def delete_process(self, process_id):
         cursor = self.con.cursor()
         cursor.execute(f"DELETE FROM KH_TB_REACTIONS WHERE PROCESSO = '{process_id}'")
         cursor.execute(f"DELETE FROM KH_TB_PROCESSOS WHERE ID = '{process_id}'")
         self.con.commit()
         cursor.close()
-        
-    
+
     async def save_reaction(self, guild, process, emoji, value):
         cursor = self.con.cursor()
         cursor.execute(
@@ -247,12 +251,12 @@ class Database:
         )
         self.con.commit()
         cursor.close()
-    async def get_reaction(self,message,reaction):
+
+    async def get_reaction(self, message, reaction):
         cursor = self.con.cursor()
-        cursor.execute(f"SELECT R.EMOJI, R.VALUE FROM KH_TB_REACTIONS R JOIN KH_TB_PROCESSOS P ON P.ID = R.PROCESSO WHERE P.MSG = '{message}' AND R.EMOJI = '{reaction}'")
+        cursor.execute(
+            f"SELECT R.EMOJI, R.VALUE FROM KH_TB_REACTIONS R JOIN KH_TB_PROCESSOS P ON P.ID = R.PROCESSO WHERE P.MSG = '{message}' AND R.EMOJI = '{reaction}'"
+        )
         result = cursor.fetchone()
         cursor.close()
-        return {
-            'emoji': result[0],
-            'value': result[1]
-        }
+        return {"emoji": result[0], "value": result[1]}
